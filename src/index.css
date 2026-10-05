@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ── Dark mode (default) ── */
+  :root {
+    --color-base:       #12122a;
+    --color-text:       #ffffff;
+    --color-text-muted: #9ca3af;
+    --color-border:     rgba(255,255,255,0.1);
+    --color-glass-bg:   rgba(255,255,255,0.05);
+    /* India accent tokens */
+    --color-saffron:    #E07B00;
+    --color-india-green:#138808;
+    --color-india-navy: #1B2B5E;
+  }
+
+  /* ── Light / India theme ── */
+  [data-theme='light'] {
+    --color-base:       #FFFBF5;
+    --color-text:       #1B2B5E;
+    --color-text-muted: #5C6B8A;
+    --color-border:     rgba(0,0,0,0.10);
+    --color-glass-bg:   rgba(255,255,255,0.90);
+    --color-saffron:    #E07B00;
+    --color-india-green:#138808;
+    --color-india-navy: #1B2B5E;
+  }
+
+  body {
+    @apply bg-[var(--color-base)] text-[var(--color-text)] font-body antialiased transition-colors duration-300;
+  }
+
+  /* Light mode: graph-paper grid on the body */
+  [data-theme='light'] body {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: #FFFBF5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Dark mode glass card */
+  .glass {
+    @apply backdrop-blur-md bg-[var(--color-glass-bg)] border border-[var(--color-border)];
+  }
+
+  /* India theme white card */
+  .card-india {
+    @apply bg-white rounded-2xl border border-[rgba(0,0,0,0.08)] shadow-card-india;
+  }
+
+  /* Saffron primary button */
+  .btn-saffron {
+    @apply px-6 py-2.5 rounded-lg bg-saffron text-white font-bold
+           hover:bg-saffron-600 active:bg-saffron-700
+           transition-colors shadow-glow-saffron;
+  }
+
+  /* Outlined button */
+  .btn-outline-india {
+    @apply px-6 py-2.5 rounded-lg border-2 border-[var(--color-border)]
+           text-[var(--color-text)] font-semibold
+           hover:border-saffron hover:text-saffron transition-colors;
+  }
+}
+
+@layer utilities {
+  .smooth-scroll { scroll-behavior: smooth; }
+}
+
+/* ── Scrollbar ── */
+::selection {
+  background: rgba(224,123,0,0.25);
+  color: #1B2B5E;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(224,123,0,0.4); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(224,123,0,0.7); }
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(224,123,0,0.45);
+  border-radius: 4px;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Print ── */
+@media print {
+  nav, footer, .no-print { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .glass, .card-india {
+    border: 1px solid #ccc !important;
+    background: none !important;
+    backdrop-filter: none !important;
+  }
+}
